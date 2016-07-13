@@ -12,7 +12,9 @@
 1. Порт  для git  по ssh 222
 
 Чтобы работал гит без указания порта:
-```git clone git@gitlab.nonlux.ru:dev/tinForms.git```
+```
+git clone git@gitlab.nonlux.ru:dev/tinForms.git
+```
 
 Надо в файле *~/.ssh/config* прописать:
 ```
