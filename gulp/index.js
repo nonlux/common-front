@@ -11,7 +11,11 @@ const args = {
   ...argv,
 };
 
-const plugins = require('gulp-load-plugins')({});
+const plugins = require('gulp-load-plugins')({
+  pattern: ['gulp-*', 'gulp.*', 'postcss-*', 'autoprefixer'],
+  replaceString: /^(gulp|postcss)(-|\.)/,
+});
+console.log(plugins);
 import webpack from 'webpack';
 import webpackStream from 'webpack-stream';
 
@@ -80,8 +84,6 @@ gulp.task('devServer', () => {
   browserSync({
     server: {
       baseDir: ENV.BUILD_DIR,
-      }
-      /*
       middleware: [
         webpackDevMiddleware(bundler, {
           stats: { colors: true }
@@ -93,16 +95,43 @@ gulp.task('devServer', () => {
       'app/css/*.css',
       'app/*.html'
     ]
-    */
   });
 });
 gulp.task('reload', browserSync.reload);
 
-gulp.task('build',['jade', 'webpack']);
+gulp.task('build',['clean', 'jade', 'webpack', 'less']);
+
+gulp.task('clean', () => {
+   const { clean } = plugins;
+   gulp.src(ENV.BUILD_DIR, {read: false})
+    .pipe(clean({force: true}));
+})
 
 gulp.task('watch', ['build', 'devServer'], () => {
   gulp.watch(jadeSrc, ['jade', 'reload']);
+  gulp.watch('src/**/*.js', ['webpack', 'reload']);
+  gulp.watch('src/**/*.less', ['less', 'reload']);
 
-  gulp.watch('src/**.js', ['webpack', 'reload']);
+});
 
+gulp.task('less', () => {
+const {
+  postcss,
+  lessEngine,
+  initial,
+  cssnext,
+  changed,
+  sourcemap,
+  rename
+} = plugins;
+
+ const processors = [
+    lessEngine(),
+    initial(),
+    cssnext(),
+ ];
+ gulp.src('less/index.less')
+  .pipe(postcss(processors, { parser: lessEngine.parser  }))
+  .pipe(rename((path) => { path.extname='.css' }))
+  .pipe(gulp.dest(ENV.BUILD_DIR));
 })
