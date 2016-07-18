@@ -1,4 +1,8 @@
-const BUILD_DIR = 'build/';
+import defaults from '../env/defaults.json';
+const ENV  = {
+  ...defaults,
+  ...process.env
+};
 
 import gulp from 'gulp';
 
@@ -55,7 +59,7 @@ gulp.task('webpack', () => {
   const { webpack } = plugins;
   return gulp.src('src/index.js')
     .pipe(webpack())
-    .pipe(gulp.dest(BUILD_DIR));
+    .pipe(gulp.dest(ENV.BUILD_DIR));
 });
 
 gulp.task('jade', () => {
@@ -63,5 +67,6 @@ gulp.task('jade', () => {
   return gulp.src('jade/**.jade')
     .pipe(changed(BUILD_DIR, { extension: '*.html' }))
     .pipe(jade({ pretty: true }))
-    .pipe(gulp.dest(BUILD_DIR));
+    .pipe(gulp.dest(ENV.BUILD_DIR));
 });
+
