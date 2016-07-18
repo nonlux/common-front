@@ -43,9 +43,11 @@
     "gulp": "^3.9.1",
     "gulp-eslint": "^3.0.1",
     "gulp-load-plugins": "^1.2.4",
+    "gulp-util": "^3.0.7",
     "redbox-react": "^1.2.10",
     "webpack": "^1.13.1",
     "webpack-dev-server": "^1.14.1",
-    "webpack-stream": "^3.2.0"
+    "webpack-stream": "^3.2.0",
+    "yargs": "^4.8.1"
   }
 }

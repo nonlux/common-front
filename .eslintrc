@@ -40,5 +40,10 @@
     "__DEVTOOLS__": true,
     "socket": true,
     "webpackIsomorphicTools": true
+  },
+  "parserOptions":{
+    "ecmaFeatures": {
+            "experimentalObjectRestSpread": true
+    }
   }
 }
