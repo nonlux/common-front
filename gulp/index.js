@@ -11,12 +11,9 @@ const args = {
   ...argv,
 };
 
-const plugins = require('gulp-load-plugins')({
-  pattern: ['gulp-*', 'gulp.*', 'webpack-stream'],
-  rename: {
-    'webpack-stream': 'webpack',
-  }
-});
+const plugins = require('gulp-load-plugins')({});
+import webpack from 'webpack';
+import webpackStream from 'webpack-stream';
 
 let CURRENT_TASK = 'default';
 const __runTask = gulp.Gulp.prototype._runTask; //eslint-disable-line no-underscore-dangle
@@ -56,17 +53,56 @@ gulp.task('gulp', ['eslint:gulp']);
 gulp.task('eslint', ['eslint:all']);
 
 gulp.task('webpack', () => {
-  const { webpack } = plugins;
+  const config = require('../wepack.config.js');
   return gulp.src('src/index.js')
-    .pipe(webpack())
+    .pipe(webpackStream(config))
     .pipe(gulp.dest(ENV.BUILD_DIR));
 });
+
+const jadeSrc= 'jade/**.jade';
 
 gulp.task('jade', () => {
   const { jade, changed } = plugins;
-  return gulp.src('jade/**.jade')
-    .pipe(changed(BUILD_DIR, { extension: '*.html' }))
+  return gulp.src(jadeSrc)
+    .pipe(changed(ENV.BUILD_DIR, { extension: '*.html' }))
     .pipe(jade({ pretty: true }))
     .pipe(gulp.dest(ENV.BUILD_DIR));
+
 });
 
+
+import browserSync from 'browser-sync';
+import webpackDevMiddleware  from 'webpack-dev-middleware';
+import webpackHotMiddleware from 'webpack-hot-middleware';
+gulp.task('devServer', () => {
+  const config = require('../wepack.config.js');
+  const bundler = webpack(config);
+  browserSync({
+    server: {
+      baseDir: ENV.BUILD_DIR,
+      }
+      /*
+      middleware: [
+        webpackDevMiddleware(bundler, {
+          stats: { colors: true }
+        }),
+        webpackHotMiddleware(bundler)
+      ]
+    },
+    files: [
+      'app/css/*.css',
+      'app/*.html'
+    ]
+    */
+  });
+});
+gulp.task('reload', browserSync.reload);
+
+gulp.task('build',['jade', 'webpack']);
+
+gulp.task('watch', ['build', 'devServer'], () => {
+  gulp.watch(jadeSrc, ['jade', 'reload']);
+
+  gulp.watch('src/**.js', ['webpack', 'reload']);
+
+})
