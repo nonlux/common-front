@@ -1,3 +1,5 @@
+const BUILD_DIR = 'build/';
+
 import gulp from 'gulp';
 
 import { argv } from 'yargs';
@@ -53,5 +55,13 @@ gulp.task('webpack', () => {
   const { webpack } = plugins;
   return gulp.src('src/index.js')
     .pipe(webpack())
-    .pipe(gulp.dest('build/'));
+    .pipe(gulp.dest(BUILD_DIR));
+});
+
+gulp.task('jade', () => {
+  const { jade, changed } = plugins;
+  return gulp.src('jade/**.jade')
+    .pipe(changed(BUILD_DIR, { extension: '*.html' }))
+    .pipe(jade({ pretty: true }))
+    .pipe(gulp.dest(BUILD_DIR));
 });
