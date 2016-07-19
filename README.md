@@ -1,3 +1,12 @@
+## Get started
+
+```
+git clone git@gitlab.nonlux.ru:dev/tinForms.git
+cd tinForms
+npm install
+gulp
+```
+
 ##Requirements:
 Требования к окружению:
  - node v6
