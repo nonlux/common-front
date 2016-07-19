@@ -2,5 +2,7 @@ html
   link(href='index.css', rel='stylesheet')
   body
     h1 Hello jade with hot reload
-    #app
+    x-hello
+    x-hello(data-foo=5)
+    x-button
     script(src='main.js')
