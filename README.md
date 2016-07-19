@@ -7,7 +7,7 @@ npm install
 gulp
 ```
 
-##Requirements:
+## Requirements:
 Требования к окружению:
  - node v6
 
@@ -16,7 +16,7 @@ gulp
  - [react](https://facebook.github.io/react/)
 
 
-##Tips:
+## Tips:
 
 1. Порт  для git  по ssh 222
 
