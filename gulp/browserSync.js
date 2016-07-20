@@ -1,10 +1,11 @@
 import browserSync from 'browser-sync';
 import webpackDevMiddleware from 'webpack-dev-middleware';
 import webpackHotMiddleware from 'webpack-hot-middleware';
-const config = require('../wepack.config.js');
 
 export default function eslintTasks(gulp) {
   const { plugins, ENV } = gulp;
+
+  const config = require(`../${ENV.src.webpackConfig}`);
 
   gulp.task('devServer', 'BrowserSync server with webpack middleware', () => {
     const bundler = plugins.tools.webpack(config);
@@ -26,4 +27,8 @@ export default function eslintTasks(gulp) {
     ENV.set('WATCH', true);
   });
   gulp.task('reload', 'Browser sync sources', browserSync.reload);
+  gulp.task('restart', 'Browser sync restart', browserSync.restartServer);
+  gulp.task('watch:webpack', 'Watch for webpack config changes',() => {
+    gulp.watch(ENV.src.webpackConfig, ['restart','build']);
+  });
 }
