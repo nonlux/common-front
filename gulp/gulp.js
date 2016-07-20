@@ -6,6 +6,68 @@ const gulp = plugins.gulp.help(gulpProto);
 
 gulp.plugins = plugins;
 gulp.ENV = ENV;
+gulp.ENV.WATCH = true;
+
+/*
+const oldTask =gulp.task;
+gulp.task = (task, help, deps, callback) => {
+  const exec = callback ? callback : (deps ? deps : help);
+
+  let  nextCallback = () => {
+  console.log('foo');
+    try {
+      console.log('run')
+      console.log(exec);
+      exec();
+    }
+    catch(error){
+      console.log('trow')
+        console.log(error);
+      if (!gulp.ENV.WATCH){
+        gulp.src('./*.js')
+        .pipe(plugins.gulp.fail('Build fail '));
+      }
+    }
+  }
+  if (exec instanceof Array || exec instanceof String){
+    nextCallback = exec;
+  }
+  const args = [task];
+  if (deps) {
+    args.push(help);
+  }
+  if ( callback ) {
+    args.push(deps);
+  }
+  args.push(nextCallback);
+
+ oldTask.apply(gulp, args);
+}
+*/
+
+/*
+const oldSrc = gulp.Gulp.prototype.src;
+gulp.Gulp.prototype.src = () => {
+  let stream = {};
+  try {
+  stream = oldSrc(arguments);
+  stream.on('error', (error) => { console.log(error); });
+  }
+  catch (e) {
+    console.log(e);
+    console.log(arguments[0]);
+  }
+  return stream;
+}
+*/
+
+
+function swallowError (error) {
+    console.log(error.toString());
+    gulp.emit('end');
+}
+plugins.swallowError = swallowError;
+
 
 const __runTask = gulp.Gulp.prototype._runTask; //eslint-disable-line no-underscore-dangle
 gulp.Gulp.prototype._runTask = (task) => { //eslint-disable-line no-underscore-dangle
@@ -35,5 +97,6 @@ gulp.task('clean', 'Remove all files from build folder', () => {
   return gulp.src(ENV.BUILD_DIR, { read: false })
     .pipe(clean({ force: true }));
 });
+
 
 export default gulp;

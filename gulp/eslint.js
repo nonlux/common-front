@@ -2,8 +2,9 @@ export default function eslintTasks(gulp) {
   const { plugins, ENV } = gulp;
 
   function eslintTask(src) {
-    const { eslint } = plugins.gulp;
+    const { eslint, plumber } = plugins.gulp;
     return gulp.src(src)
+      .pipe(plumber({errorHandler: ENV.WATCH}))
       .pipe(eslint())
       .pipe(eslint.format())
       .pipe(eslint.failAfterError());

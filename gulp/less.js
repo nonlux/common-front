@@ -10,7 +10,8 @@ export default function eslintTasks(gulp) {
 
     const {
       postcss,
-      rename
+      rename,
+      plumber
     } = plugins.gulp;
 
     const processors = [
@@ -19,6 +20,7 @@ export default function eslintTasks(gulp) {
       cssnext(),
     ];
     gulp.src('less/index.less')
+      .pipe(plumber({errorHandler: ENV.WATCH}))
       .pipe(postcss(processors, { parser: lessEngine.parser }))
       .pipe(rename((path) => { path.extname = '.css'; })) //eslint-disable-line no-param-reassign
       .pipe(gulp.dest(ENV.BUILD_DIR));
