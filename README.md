@@ -1,33 +1,29 @@
-## Get started
+This is fat tools for my projects.
 
+It need to manual merge with custom projects.
+
+## Included
+
+* Build js (react) with webpack
+* Build less, jade(pug)
+* Dev server browser sync + webpack
+* Use pouchdb(couchdb) for store redux data. Offline support
+
+## Get started
 ```
-git clone git@gitlab.nonlux.ru:dev/tinForms.git
-cd tinForms
 npm install
-gulp
+gulp help
 ```
 
 ## Requirements:
-Требования к окружению:
  - node v6
 
-Материалы:
+Read IT:
  - [es6](http://es6-features.org/)
  - [react](https://facebook.github.io/react/)
+ - [pouchdb](https://pouchdb.com/guides/)
 
 
-## Tips:
-
-1. Порт  для git  по ssh 222
-
-Чтобы работал гит без указания порта:
-```
-git clone git@gitlab.nonlux.ru:dev/tinForms.git
-```
-
-Надо в файле *~/.ssh/config* прописать:
-```
-Host gitlab.nonlux.ru
-  HostName gitlab.nonlux.ru
-  Port 222
-```
+Relative projects:
+ - [erikras/react-redux-universal-hot-example](https://github.com/erikras/react-redux-universal-hot-example)
+ - [pgte/pouch-websocket-sync-example](https://github.com/pgte/pouch-websocket-sync-example)
