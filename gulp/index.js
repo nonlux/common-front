@@ -6,6 +6,7 @@ require('./jade')(gulp);
 require('./browserSync')(gulp);
 require('./less')(gulp);
 require('./assets')(gulp);
+require('./karma')(gulp);
 
 gulp.task('default', ['watch']);
 gulp.task('build', 'Build project', ['clean', 'assets', 'jade', 'webpack', 'less']);

@@ -2,6 +2,7 @@ import defaults from './defaults.json'; //eslint-disable-line import/no-named-as
 import src from './src';
 import { argv } from 'yargs';
 import webpackConfig from './webpack.config.js';
+import karmaConfig from './karma.js';
 
 const ENV = {
   ...defaults,
@@ -13,5 +14,8 @@ const ENV = {
   },
 };
 ENV.webpackConfig = webpackConfig(ENV);
+ENV.karmaConfig = karmaConfig(ENV);
+
+process.env = ENV;
 
 export default ENV;

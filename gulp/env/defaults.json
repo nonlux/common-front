@@ -1,3 +1,5 @@
 {
-  "BUILD_DIR": "./build/"
+  "BUILD_DIR": "./build/",
+  "NODE_ENV": "development",
+  "CI": false
 }

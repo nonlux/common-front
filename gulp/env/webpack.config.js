@@ -21,7 +21,7 @@ function babelLoader(NODE_ENV) {
     babelLoaderQuery = {
       ...babelLoaderQuery,
       ...babelrcEnvObject,
-      combinedPlugins,
+      plugins: combinedPlugins,
     };
   }
 
