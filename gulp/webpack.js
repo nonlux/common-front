@@ -2,13 +2,12 @@
 export default function eslintTasks(gulp) {
   const { plugins, ENV } = gulp;
 
-  const config = require(`../${ENV.src.webpackConfig}`);
   gulp.task('webpack', 'Create browser bundle with webpack', () => {
     const { webpackStream, plumber } = plugins.gulp;
     if (!ENV.WATCH) {
-      gulp.src(config.entry[0])
+      gulp.src(ENV.webpackConfig.entry[0])
         .pipe(plumber({ errorHandler: ENV.WATCH }))
-        .pipe(webpackStream(config))
+        .pipe(webpackStream(ENV.webpackConfig))
         .pipe(gulp.dest(ENV.BUILD_DIR));
     }
   });

@@ -17,6 +17,5 @@ gulp.task('watch', 'Watch for project changes', [
   'devServer',
   'watch:jade',
   'watch:less',
-  'watch:webpack'
   'watch:eslint']);
 
