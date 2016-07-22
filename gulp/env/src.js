@@ -6,6 +6,7 @@ const src = {
   },
   jade: 'jade/**.jade',
   webpackConfig: 'webpack.config.js',
+  assets: 'static/*'
 };
 
 export default src;
