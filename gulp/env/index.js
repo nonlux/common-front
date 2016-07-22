@@ -1,18 +1,12 @@
 const defaults = require('./defaults.json');
+import src from './src';
 import { argv } from 'yargs';
 
 const ENV = {
   ...defaults,
   ...process.env,
   args: { ...argv },
-  src: {
-    js: {
-      all: ['**/*.js', '!node_modules/**', '!build/**'],
-      gulp: ['gulpfile.js', 'gulp/**/*.js'],
-      src: ['src/**/*.js']
-    },
-    jade: 'jade/**.jade',
-  },
+  src,
   set(key, value) {
     this[key] = value;
   }

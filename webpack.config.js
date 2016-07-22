@@ -1,13 +1,16 @@
 /*eslint-disable */
 var path = require('path');
 var webpack = require('webpack');
+
 module.exports = {
   cache: true,
-  entry: [
-    './src/index.js',
- //   'webpack/hot/dev-server',
-  //'webpack-hot-middleware/client',
-  ],
+  entry:{
+    main: [
+      './src/index.js',
+      //   'webpack/hot/dev-server',
+      //'webpack-hot-middleware/client',
+    ],
+  },
   output: {
     path: path.join(__dirname, 'build/'),
     publicPath: 'build/',
