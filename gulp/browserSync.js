@@ -24,7 +24,6 @@ export default function eslintTasks(gulp) {
         'app/*.html'
       ]
     });
-    ENV.set('WATCH', true);
   });
   gulp.task('reload', 'Browser sync sources', browserSync.reload);
   gulp.task('restart', 'Browser sync restart', browserSync.restartServer);

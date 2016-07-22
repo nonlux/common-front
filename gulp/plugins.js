@@ -12,6 +12,8 @@ const tools = require('gulp-load-plugins')({
   pattern: ['webpack'],
 });
 
+gulp.ifs = gulp.if;
+
 const plugins = {
   gulp,
   postcss,

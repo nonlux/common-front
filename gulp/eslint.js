@@ -2,12 +2,11 @@ export default function eslintTasks(gulp) {
   const { plugins, ENV } = gulp;
 
   function eslintTask(src) {
-    const { eslint, plumber } = plugins.gulp;
+    const { eslint, ifs } = plugins.gulp;
     return gulp.src(src)
-      .pipe(plumber({errorHandler: ENV.WATCH}))
       .pipe(eslint())
       .pipe(eslint.format())
-      .pipe(eslint.failAfterError());
+      .pipe(ifs(!ENV.WATCH, eslint.failAfterError()));
   }
 
   gulp.generateTargetTask(
@@ -15,4 +14,12 @@ export default function eslintTasks(gulp) {
       'eslint',
       eslintTask,
       'Linting javascript');
+
+  gulp.task(
+      'watch:eslint',
+      'Watha for js canges and lint',
+      ['set:watch', 'eslint:all'],
+      () => {
+        gulp.watch(ENV.src.js.all, ['eslint:all']);
+      });
 }

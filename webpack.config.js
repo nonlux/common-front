@@ -1,3 +1,4 @@
+/*eslint-disable */
 var path = require('path');
 var webpack = require('webpack');
 
@@ -29,3 +30,4 @@ module.exports = {
   ]
 };
 
+/*eslint-enable */
