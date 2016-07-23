@@ -40,9 +40,8 @@ gulp.generateTargetTask = (src, task, callback, help) => {
 };
 
 gulp.task('clean', 'Remove all files from build folder', () => {
-  const { clean } = plugins.gulp;
-  return gulp.src(ENV.BUILD_DIR, { read: false })
-    .pipe(clean({ force: true }));
+  const { run } = plugins.gulp;
+  return run(`rm -fr ${ENV.BUILD_DIR}; mkdir ${ENV.BUILD_DIR}`).exec();
 });
 
 
