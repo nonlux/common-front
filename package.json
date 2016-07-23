@@ -64,6 +64,7 @@
     "gulp-plumber": "^1.1.0",
     "gulp-postcss": "^6.1.1",
     "gulp-rename": "^1.2.2",
+    "gulp-run": "^1.7.1",
     "gulp-sourcemap": "^1.0.1",
     "gulp-util": "^3.0.7",
     "karma": "^1.1.1",
