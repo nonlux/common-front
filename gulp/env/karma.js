@@ -4,15 +4,21 @@ import karmaMochaReporter from 'karma-mocha-reporter';
 import karmaPhantomjsLauncher from 'karma-phantomjs-launcher';
 import karmaChromeLauncher from 'karma-chrome-launcher';
 import karmaSourcemapLoader from 'karma-sourcemap-loader';
+import webpackConfig from './webpack.config.js';
 
 export default function karmaConfig(ENV) {
+
   const nextWebpackConfig = {
-    ...ENV.webpackConfig,
+    ...webpackConfig({
+      ...ENV,
+      NODE_ENV: 'test'
+    }),
     externals: {
-      jsdom: 'window',
-      cheerio: 'window',
+       jsdom: 'window',
+       cheerio: 'window',
       'react/lib/ReactContext': 'window',
-      'react/lib/ExecutionEnvironment': true
+      'react/lib/ExecutionEnvironment': true,
+      'react/addons': true
     },
   };
   delete nextWebpackConfig.entry;
@@ -23,7 +29,8 @@ export default function karmaConfig(ENV) {
     frameworks: ['mocha'],
     files: [
       './node_modules/phantomjs-polyfill/bind-polyfill.js',
-      'test.js'
+      'static/*.js',
+      'test.js',
     ],
     preprocessors: {
       'test.js': ['webpack', 'sourcemap']
