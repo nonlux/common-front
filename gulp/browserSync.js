@@ -25,10 +25,6 @@ export default function eslintTasks(gulp) {
           baseDir: ENV.BUILD_DIR,
         },
         middleware,
-        files: [
-          'app/css/*.css',
-          'app/*.html'
-        ]
       });
     });
   gulp.task('reload', 'Browser sync sources', browserSync.reload);
