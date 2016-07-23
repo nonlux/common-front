@@ -7,15 +7,14 @@ import karmaSourcemapLoader from 'karma-sourcemap-loader';
 import webpackConfig from './webpack.config.js';
 
 export default function karmaConfig(ENV) {
-
   const nextWebpackConfig = {
     ...webpackConfig({
       ...ENV,
       NODE_ENV: 'test'
     }),
     externals: {
-       jsdom: 'window',
-       cheerio: 'window',
+      jsdom: 'window',
+      cheerio: 'window',
       'react/lib/ReactContext': 'window',
       'react/lib/ExecutionEnvironment': true,
       'react/addons': true

@@ -1,5 +1,7 @@
 {
   "BUILD_DIR": "./build/",
   "NODE_ENV": "development",
-  "CI": false
+  "CI": false,
+  "PROXY_API": false,
+  "PROXY_API_URL": "http://localhost:3030/"
 }
