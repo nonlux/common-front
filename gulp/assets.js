@@ -7,7 +7,7 @@ export default function eslintTasks(gulp) {
       'Copy static assets',
       () => gulp.src(ENV.src.assets)
            .pipe(rename({ dirname: '' }))
-           .pipe(gulp.dest(ENV.BUILD_DIR)));
+           .pipe(gulp.dest(ENV.BUILD_DIR+'.')));
 
   gulp.task(
       'watch:assets',

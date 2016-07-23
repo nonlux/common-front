@@ -20,5 +20,5 @@ gulp.task('watch', 'Watch for project changes', [
   'watch:jade',
   'watch:less',
   'watch:assets',
-  'watch:eslint']);
+  ]);
 
