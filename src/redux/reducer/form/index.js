@@ -17,10 +17,10 @@ runner.add(TYPES.CHANGE, (state, action) => {
     return {};
   }
 
-  const {key} = action;
+  const {name} = action;
   const next = {};
-  next[key] = {
-    ...state[key],
+  next[name] = {
+    ...state[name],
     value: action.value,
     isValid: true,
     error: '',
@@ -34,10 +34,10 @@ runner.add(TYPES.VALIDATE, (state, action) => {
     return {};
   }
 
-  const {key, isValid, error} = action;
+  const {name, isValid, error} = action;
   const next = {};
-  next[key] = {
-    ...state[key],
+  next[name] = {
+    ...state[name],
     isValid,
     error: error ? error : '',
   };
