@@ -1,34 +1,24 @@
-import React, {Component} from 'react';
+import React, {Component, PropTypes} from 'react';
 import { connect } from 'react-redux';
-import { emitChange } from 'redux/reducer/form/actions';
+import { InputDom, Validator } from 'components';
 
-class InputDom extends Component {
-  render() {
-    const { name, form, dispatch } = this.props;
-    const value = form && form[name] && form[name].value ? form[name].value : '';
-    const inputProps = {
-      type: 'text',
-      value,
-      name,
-      onChange: () => { dispatch(emitChange(name, this.ref.value)) },
-      ref: (ref) => { this.ref = ref; }
-    };
-
-    return <input {...inputProps} />;
-  }
-}
 
 export default class Input extends Component {
+  static propTypes = {
+    formName: PropTypes.string,
+  }
   render() {
-    const {name} = this.props;
-
+    const formName = this.props.formName ? this.props.formName : 'form';
     const inputProps = {
       ...this.props,
+      formName,
     };
 
+    const ConnetedInput = connect(state =>({form: state[formName]}))(InputDom);
+    const ConnetedValidator = connect(state =>({form: state[formName]}))(Validator);
 
-    const ConnetedInput = connect(state =>({form: state.form}))(InputDom);
-
-    return <ConnetedInput {...inputProps} />;
+    return <ConnetedValidator {...inputProps} >
+      <ConnetedInput {...inputProps} />
+    </ConnetedValidator>
   }
 }

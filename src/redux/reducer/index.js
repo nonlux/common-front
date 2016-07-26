@@ -1,7 +1,8 @@
 import { combineReducers } from 'redux';
 
-import form from './form';
+import form, {formReducerFactory} from './form';
 
 export default combineReducers({
   form,
+  formNext: formReducerFactory('formNext'),
 });

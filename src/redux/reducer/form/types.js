@@ -1,5 +1,6 @@
 const TYPES = {
-  CHANGE: 'form/CHANGE'
+  CHANGE: 'form/CHANGE',
+  VALIDATE: 'form/VALIDATE',
 }
 
 export default TYPES;

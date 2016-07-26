@@ -6,4 +6,9 @@ import {
   Root,
 } from 'components';
 
-ReactDOM.render(<Root><Input name="foo" /></Root>, document.getElementById('content'));
+ReactDOM.render(
+    <Root>
+      <Input name="foo" />
+      <Input name="foo" />
+      <Input name="foo" formName='formNext' />
+    </Root>, document.getElementById('content'));
