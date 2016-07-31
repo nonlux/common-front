@@ -22,6 +22,7 @@ export default function suggestReducerFactory(name, formName = 'form') {
     };
   });
 
+
   return runner.instance;
 }
 
