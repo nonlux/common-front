@@ -45,6 +45,36 @@ runner.add(TYPES.VALIDATE, (state, action) => {
   return next;
 });
 
+runner.add(TYPES.FOCUS, (state, action) => {
+  if ( state.formName !== action.formName ) {
+    return {};
+  }
+
+  const {name} = action;
+  const next = {};
+  next[name] = {
+    ...state[name],
+    focused: true,
+  };
+
+  return next;
+});
+
+runner.add(TYPES.BLUR, (state, action) => {
+  if ( state.formName !== action.formName ) {
+    return {};
+  }
+
+  const {name} = action;
+  const next = {};
+  next[name] = {
+    ...state[name],
+    focused: false,
+  };
+
+  return next;
+});
+
 return runner.instance;
 }
 export default formReducerFactory();

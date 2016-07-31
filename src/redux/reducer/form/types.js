@@ -8,7 +8,9 @@ const TYPES = {
     ARROW_DOWN: 'form/PRESS_ARROW_DOWN',
     ENTER: 'form/PRESS_ENTER',
     ESCAPE: 'form/PRESS_ESCAPE',
-  }
+    TAB: 'form/PRESS_TAB',
+  },
+  FOCUS: 'form/FOCUS',
 }
 
 export default TYPES;

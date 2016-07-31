@@ -21,7 +21,8 @@ export function onKeyDownAction(name, key, formName = 'form') {
     ArrowUp:TYPES.PRESS.ARROW_UP,
     ArrowDown: TYPES.PRESS.ARROW_DOWN,
     Enter: TYPES.PRESS.ENTER,
-    Escape: TYPES.PRESS.ESCAPE
+    Escape: TYPES.PRESS.ESCAPE,
+    Tab: TYPES.PRESS.TAB,
   }
 
   if (pressTypes[key]){
@@ -34,6 +35,14 @@ export function onKeyDownAction(name, key, formName = 'form') {
 export function onBlurAction(name, formName = 'form') {
   return {
     type: TYPES.BLUR,
+    name,
+    formName
+  }
+}
+
+export function onFocusAction(name, formName = 'form') {
+  return {
+    type: TYPES.FOCUS,
     name,
     formName
   }
