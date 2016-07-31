@@ -1,5 +1,5 @@
 import React, {Component, PropTypes} from 'react';
-import { changeValue } from 'redux/reducer/form/actions';
+import { onChangeAction, onKeyDownAction, onBlurAction } from 'redux/reducer/form/actions';
 
 export default class InputDom extends Component {
   static propTypes = {
@@ -21,9 +21,9 @@ export default class InputDom extends Component {
       name,
       id,
       className,
-      onChange() { dispatch(emitChange(name, this.ref.value, formName)) },
-      onKeyDown(event) { dispatch(name, event.key, formName) },
-      ref(ref) { this.ref = ref; }
+      onChange:() => { dispatch(onChangeAction(name, this.refs.ref.value, formName)) },
+      onKeyDown(event) { dispatch(onKeyDownAction(name, event.key, formName)) },
+      ref: 'ref'
     };
 
     return <input {...inputProps} />;

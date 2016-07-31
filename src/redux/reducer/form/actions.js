@@ -19,8 +19,8 @@ export function onKeyDownAction(name, key, formName = 'form') {
 
   const pressTypes = {
     ArrowUp:TYPES.PRESS.ARROW_UP,
-    ArrowDown: TYPES.PRESS.ARROW_DOWN
-    Enter: TYPES.PRESS.ENTER
+    ArrowDown: TYPES.PRESS.ARROW_DOWN,
+    Enter: TYPES.PRESS.ENTER,
     Escape: TYPES.PRESS.ESCAPE
   }
 
