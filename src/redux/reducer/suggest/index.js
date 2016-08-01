@@ -1,5 +1,6 @@
-import TYPES from '../form/types';
-import {ReducerRunner} from 'utils/redux';
+import FORM_TYPES from '../form/types';
+import TYPES from './types';
+import {ReducerRunner, loadReducerGenerator} from 'utils/redux';
 
 export default function suggestReducerFactory(name, formName = 'form') {
 
@@ -9,20 +10,20 @@ export default function suggestReducerFactory(name, formName = 'form') {
   const runner = new ReducerRunner();
   runner.initialState = initialState;
 
-  /* suggest example
-  runner.add(TYPES.CHANGE, (state, action) => {
+  /*simple suggest example
+  */
 
-    if ( formName !== action.formName  || name !== action.name ) {
+  runner.add(TYPES.SUCCESS, (state, action) => {
+    if ( formName !== action.meta.formName  || name !== action.meta.name ) {
       return {};
     }
 
-    const items = ['aa', 'bb', 'cc', 'dd', 'ii', 'ff', 'gg'];
-
     return {
-      items: items.map((item) => `${action.value}${item}`)
+      items: action.payload
     };
   });
-  */
+  runner.setLoadable(TYPES);
+
 
   return runner.instance;
 }

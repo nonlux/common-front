@@ -8,5 +8,6 @@ export default combineReducers({
   formNext: formReducerFactory('formNext'),
   suggest: combineReducers({
     fooformNext: suggest('foo', 'formNext'),
-  })
+  }),
+  lastAction: (state, action) => ({ ...action, time: new Date().getTime() })
 });

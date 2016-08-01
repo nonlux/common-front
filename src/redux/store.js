@@ -9,4 +9,7 @@ const store = createStore(reducer, compose(
   DevTools.instrument( { maxAge: 50, shouldCatchErrors: true })
 ));
 
+import subscribers from 'subscribers';
+subscribers(store);
+
 export default store;

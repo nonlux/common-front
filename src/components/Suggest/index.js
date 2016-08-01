@@ -6,9 +6,8 @@ import {
 
 import { connect } from 'react-redux';
 import Autosuggest from 'react-autosuggest';
-import {
-  onChangeAction,
-} from 'redux/reducer/form/actions';
+import { onChangeAction } from 'redux/reducer/form/actions';
+import { onUpdate } from 'redux/reducer/suggest/actions';
 
 import classNames from 'classnames';
 
@@ -41,14 +40,20 @@ export default class Suggest extends Component {
       value,
       name,
       className: classNames(className, 'react-autosuggest__input'),
-      onChange:(event, { newValue }) => { dispatch(onChangeAction(name, newValue, formName)) },
+      onChange(event, { newValue }){ dispatch(onChangeAction(name, newValue, formName)) },
     };
-    return (
-      <Autosuggest suggestions={items}
-      getSuggestionValue={getSuggestionValue}
-      renderSuggestion={renderSuggestion}
-      inputProps={inputProps} />
-    );
+      const suggestProps = {
+        suggestions: items,
+        onSuggestionsUpdateRequested({value, reason}) {
+          if (reason === 'type' || reason === 'enter') {
+            dispatch(onUpdate(value, name, formName))
+        }},
+        getSuggestionValue,
+        renderSuggestion,
+        inputProps
+      }
+
+    return <Autosuggest {...suggestProps} />
   }
 }
 
