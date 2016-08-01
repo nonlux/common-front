@@ -10,8 +10,9 @@ require('./karma')(gulp);
 
 gulp.task('default', ['watch']);
 gulp.task('build', 'Build project', ['clean', 'assets', 'jade', 'webpack', 'less']);
-gulp.task('set:watch', 'SET WATCH ENV', () => {
+gulp.task('set:watch', 'SET WATCH ENV', (done) => {
   gulp.ENV.set('WATCH', true);
+  done();
 });
 gulp.task('watch', 'Watch for project changes', [
   'set:watch',
