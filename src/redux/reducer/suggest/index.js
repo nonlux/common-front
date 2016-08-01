@@ -9,6 +9,7 @@ export default function suggestReducerFactory(name, formName = 'form') {
   const runner = new ReducerRunner();
   runner.initialState = initialState;
 
+  /* suggest example
   runner.add(TYPES.CHANGE, (state, action) => {
 
     if ( formName !== action.formName  || name !== action.name ) {
@@ -21,7 +22,7 @@ export default function suggestReducerFactory(name, formName = 'form') {
       items: items.map((item) => `${action.value}${item}`)
     };
   });
-
+  */
 
   return runner.instance;
 }
