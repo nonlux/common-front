@@ -27,6 +27,6 @@ export default function eslintTasks(gulp) {
   });
 
   gulp.task('watch:less', 'Watch for less changes', () => {
-    gulp.watch('src/**/*.less', ['less', 'reload']);
+    gulp.watch('less/**/*.less', ['less', 'reload']);
   });
 }

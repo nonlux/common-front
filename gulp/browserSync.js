@@ -9,12 +9,18 @@ export default function eslintTasks(gulp) {
   gulp.task(
     'devServer',
     'BrowserSync server with webpack middleware',
+    ['devServer:init', 'watch:build'],
+  )
+
+  gulp.task('devServer:init',
     () => {
-      const bundler = plugins.tools.webpack(ENV.webpackConfig);
-      const middleware = [
-        webpackDevMiddleware(bundler, { stats: { colors: true } }),
-        webpackHotMiddleware(bundler)
-      ];
+      const middleware = [];
+
+      if (ENV.USE_WEBPACK_MIDDLEWARE) {
+        const bundler = plugins.tools.webpack(ENV.webpackConfig);
+        middleware.push(webpackDevMiddleware(bundler, { stats: { colors: true } }));
+        middleware.push(webpackHotMiddleware(bundler));
+      }
 
       if (ENV.PROXY_API) {
         middleware.push(
@@ -27,7 +33,12 @@ export default function eslintTasks(gulp) {
         middleware,
       });
     });
+  gulp.task('watch:build', () => {
+    gulp.watch('build/**', ['reload']);
+
+  })
   gulp.task('reload', 'Browser sync sources', browserSync.reload);
+
   gulp.task('restart', 'Browser sync restart', browserSync.restartServer);
   gulp.task('watch:webpack', 'Watch for webpack config changes', () => {
     gulp.watch(ENV.src.webpackConfig, ['restart', 'build']);
