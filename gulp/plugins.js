@@ -1,5 +1,5 @@
 const gulp = require('gulp-load-plugins')({
-  pattern: ['gulp-*', 'gulp.*', 'webpack-stream'],
+  pattern: ['gulp-*', 'gulp.*', 'webpack-stream', 'run-sequence'],
   replaceString: /^(gulp|postcss)(-|\.)/,
 });
 

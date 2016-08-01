@@ -7,6 +7,7 @@ const gulp = plugins.gulp.help(gulpProto);
 gulp.plugins = plugins;
 gulp.ENV = ENV;
 gulp.ENV.WATCH = false;
+gulp.deps = (deps) => { deps.forEach((file) => { require(`./${file}.js`)(gulp) }) }
 
 function swallowError(error) {
   console.log(error.toString());
@@ -39,9 +40,9 @@ gulp.generateTargetTask = (src, task, callback, help) => {
   gulp.task(task, [help, 'for all targets'].join(' '), deps);
 };
 
-gulp.task('clean', 'Remove all files from build folder', () => {
-  const { run } = plugins.gulp;
-  return run(`rm -fr ${ENV.BUILD_DIR}; mkdir ${ENV.BUILD_DIR}`).exec();
+gulp.task('clean', 'Remove all files from build folder', (done) => {
+  const { run, callback } = plugins.gulp;
+  run(`rm -fr ${ENV.BUILD_DIR}; mkdir ${ENV.BUILD_DIR}`).exec().pipe(callback(done));
 });
 
 
