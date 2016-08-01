@@ -6,89 +6,45 @@ import {
 
 import { connect } from 'react-redux';
 import Autosuggest from 'react-autosuggest';
+import {
+  onChangeAction,
+} from 'redux/reducer/form/actions';
 
-const languages = [
-  {
-    name: 'C',
-    year: 1972
+import classNames from 'classnames';
 
-  },
-  {
-    name: 'Elm',
-    year: 2012
-
-  },
-  {
-    name: 'Elc',
-    year: 2012
-
-  },
-  {
-    name: 'Car',
-    year: 2012
-
-  },
-   
-];
-
-function getSuggestions(value) {
-  const inputValue = value.trim().toLowerCase();
-  const inputLength = inputValue.length;
-
-  return inputLength === 0 ? [] : languages.filter(lang =>
-                                                   lang.name.toLowerCase().slice(0, inputLength) === inputValue
-                                                  );
-
-}
-
-function getSuggestionValue(suggestion) { // when suggestion selected, this function tells 
-  return suggestion.name;                 // what should be the value of the input 
+function getSuggestionValue(suggestion) {
+  return suggestion;
 }
 
 function renderSuggestion(suggestion) {
   return (
-    <span>{suggestion.name}</span>
-
+    <span>{suggestion}</span>
   );
-
 }
 
 export default class Suggest extends Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      value: '',
-      suggestions: getSuggestions('')
-    };
-
-    this.onChange = this.onChange.bind(this);
-    this.onSuggestionsUpdateRequested = this.onSuggestionsUpdateRequested.bind(this);
-  }
-
-  onChange(event, { newValue }) {
-    this.setState({
-      value: newValue
-    });
-  }
-
-  onSuggestionsUpdateRequested({ value }) {
-    this.setState({
-      suggestions: getSuggestions(value)
-    });
+  static propTypes = {
+    name: PropTypes.string.isRequired,
+    form: PropTypes.object.isRequired,
+    dispatch: PropTypes.func.isRequired,
+    suggest: PropTypes.object.isRequired,
+    className: PropTypes.string,
+    id: PropTypes.string,
+    type: PropTypes.string,
   }
 
   render() {
-    const { value, suggestions } = this.state;
+    const { name, form, dispatch, className, id, type, suggest: { items } } = this.props;
+    const { formName } = form;
+    const value = form && form[name] && form[name].value ? form[name].value : '';
     const inputProps = {
-      placeholder: 'Type a programming language',
       value,
-      onChange: this.onChange
+      name,
+      className: classNames(className, 'react-autosuggest__input'),
+      onChange:(event, { newValue }) => { dispatch(onChangeAction(name, newValue, formName)) },
     };
-
     return (
-      <Autosuggest suggestions={suggestions}
-      onSuggestionsUpdateRequested={this.onSuggestionsUpdateRequested}
+      <Autosuggest suggestions={items}
       getSuggestionValue={getSuggestionValue}
       renderSuggestion={renderSuggestion}
       inputProps={inputProps} />

@@ -13,6 +13,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "classnames": "^2.2.5",
     "pouch-websocket-sync": "^0.3.0",
     "pouchdb": "^5.4.5",
     "react": "^15.2.1",
