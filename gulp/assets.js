@@ -1,12 +1,12 @@
 export default function eslintTasks(gulp) {
   const { plugins, ENV } = gulp;
   const { run } = plugins.gulp;
-
-  gulp.task(
-      'assets',
-      'Copy static assets',
-      () => run(`cp static/* ${ENV.BUILD_DIR} -fr`).exec());
-
+  
+  gulp.task('assets', 'Copy static assets', function() {
+    gulp.src('static/**/*')
+    .pipe(gulp.dest(ENV.BUILD_DIR));
+            });
+            
   gulp.task(
       'watch:assets',
       'Watha for assets changed',
