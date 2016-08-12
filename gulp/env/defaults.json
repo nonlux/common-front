@@ -4,5 +4,5 @@
   "CI": false,
   "PROXY_API": false,
   "PROXY_API_URL": "http://localhost:3030/",
-  "USE_WEBPACK_MIDDLEWARE": false
+  "USE_WEBPACK_MIDDLEWARE": true
 }

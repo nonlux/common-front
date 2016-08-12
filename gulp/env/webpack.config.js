@@ -1,6 +1,7 @@
 import path from 'path';
 import webpack from 'webpack';
 import fs from 'fs';
+import HappyPack from 'happypack';
 
 function babelLoader(NODE_ENV) {
   const babelrc = fs.readFileSync('./.babelrc');
@@ -22,11 +23,13 @@ function babelLoader(NODE_ENV) {
       ...babelLoaderQuery,
       ...babelrcEnvObject,
       plugins: combinedPlugins,
+      cacheDirectory: '.cache/babel',
     };
   }
 
-  return ['babel?', JSON.stringify(babelLoaderQuery)].join('');
+  return ['babel', JSON.stringify(babelLoaderQuery)].join('?');
 }
+
 
 export default function config(ENV) {
   const { NODE_ENV } = ENV;
@@ -40,34 +43,48 @@ export default function config(ENV) {
   let devtool = 'inline-source-map';
 
   const mainEntry = ['./src/index.js'];
+  const insDevelopment = NODE_ENV === 'development';
 
   const plugins = [
     new webpack.optimize.OccurenceOrderPlugin(),
     new webpack.NoErrorsPlugin(),
     new webpack.DefinePlugin({
-      __CLIENT__: true,
-      __SERVER__: false,
-      __DEVELOPMENT__: NODE_ENV === 'development',
-      __DEVTOOLS__: NODE_ENV === 'development'
+      __DEVELOPMENT__: insDevelopment,
     }),
   ];
 
+  jsLoader.loaders.push(babelLoader(NODE_ENV));
+
   if (NODE_ENV === 'development') {
-    jsLoader.loaders.push('react-hot');
+    jsLoader.loaders.unshift('react-hot');
     devtool = 'eval';
     mainEntry.push('webpack-hot-middleware/client');
     plugins.push(new webpack.HotModuleReplacementPlugin());
+    if (0) {
+
+    plugins.push(new HappyPack({
+      loaders: jsLoader.loaders,
+      tempDir: '.cache/happypack',
+      cachePath: '.cache/happypack/cache--[id].json',
+      threads: 4,
+    }));
+    jsLoader.loaders = ['happypack/loader'];
+    }
+
+
   }
 
-  jsLoader.loaders.push(babelLoader(NODE_ENV));
+
+  const BASE_DIR =  path.resolve(__dirname, '../../');
 
   const config = {
     devtool,
-    cache: true,
-    context: path.resolve(__dirname, '../../'),
-    entry: { main: mainEntry },
+    cache: insDevelopment,
+    context: BASE_DIR,
+    entry: { main: mainEntry,
+    },
     output: {
-      path: path.join(__dirname, 'build/'),
+      path: path.resolve(BASE_DIR, 'build/'),
       publicPath: 'build/',
       filename: '[name].js',
       chunkFilename: '[chunkhash].js'
@@ -89,4 +106,5 @@ export default function config(ENV) {
   };
 
   return config;
+
 }

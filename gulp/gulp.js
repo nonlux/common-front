@@ -1,6 +1,7 @@
 import gulpProto from 'gulp';
 import ENV from './env';
 import plugins from './plugins';
+import fs from 'fs';
 
 const gulp = plugins.gulp.help(gulpProto);
 
@@ -41,8 +42,15 @@ gulp.generateTargetTask = (src, task, callback, help) => {
 };
 
 gulp.task('clean', 'Remove all files from build folder', (done) => {
-  const { run, callback } = plugins.gulp;
-  run(`rm -fr ${ENV.BUILD_DIR}; mkdir ${ENV.BUILD_DIR}`).exec().pipe(callback(done));
+  const { clean, callback } = plugins.gulp;
+  if (fs.existsSync(ENV.BUILD_DIR)){
+    gulp.src(ENV.BUILD_DIR, {read: false})
+    .pipe(clean({force: true}))
+    .pipe(callback(done));
+  }
+  else {
+    done();
+  }
 });
 
 

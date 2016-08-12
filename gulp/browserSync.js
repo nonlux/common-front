@@ -18,7 +18,7 @@ export default function eslintTasks(gulp) {
 
       if (ENV.USE_WEBPACK_MIDDLEWARE) {
         const bundler = plugins.tools.webpack(ENV.webpackConfig);
-        middleware.push(webpackDevMiddleware(bundler, { stats: { colors: true } }));
+        middleware.push(webpackDevMiddleware(bundler, { stats: { colors: true, chunks: false } }));
         middleware.push(webpackHotMiddleware(bundler));
       }
 
@@ -28,13 +28,14 @@ export default function eslintTasks(gulp) {
       }
       browserSync({
         server: {
-          baseDir: ENV.BUILD_DIR,
+          baseDir: [ENV.BUILD_DIR, './static/'],
         },
         middleware,
       });
     });
   gulp.task('watch:build', () => {
     gulp.watch('build/**', ['reload']);
+    gulp.watch('static/**', ['reload']);
 
   })
   gulp.task('reload', 'Browser sync sources', browserSync.reload);
